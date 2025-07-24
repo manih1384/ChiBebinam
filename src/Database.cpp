@@ -19,11 +19,11 @@ void Database::loadUsers(const std::string& path) {
 }
 
 
+
 void Database::loadMovies(const std::string& path) {
     auto lines = CsvParser::parse(path);
-
     for (const auto& line : lines) {
-        movies.push_back(Movie(line));
+        movies.push_back(std::make_shared<Movie>(Movie::createMovie(line)));
     }
 }
 

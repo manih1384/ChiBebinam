@@ -30,3 +30,26 @@ class MovieNotFound : public AppException {
 public:
     MovieNotFound() : AppException("Movie not found") {}
 };
+
+
+
+
+
+
+class CsvRowSizeMismatch : public AppException {
+public:
+    CsvRowSizeMismatch()
+        : AppException("CSV row size mismatch: expected 5 fields for Movie") {}
+};
+
+class InvalidImdbScore : public AppException {
+public:
+    InvalidImdbScore()
+        : AppException("Invalid IMDb score: must be an integer between 0 and 10") {}
+};
+
+class InvalidGenreString : public AppException {
+public:
+    InvalidGenreString(const std::string& genre)
+        : AppException("Invalid genre string: " + genre) {}
+};
