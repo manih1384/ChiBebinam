@@ -1,15 +1,16 @@
-#pragma once
-
-#include <string>
+#ifndef CHIBEBINAM_HEADER
+#define CHIBEBINAM_HEADER
+#include "Database.hpp"
 
 class ChiBebinam {
 public:
-    ChiBebinam(int argc, char* argv[]);
+    ChiBebinam(Database& database);
     void run();
 
 private:
-    std::string usersFilePath;
-    std::string moviesFilePath;
+    Database& db;
 
     void handleCommand();
 };
+
+#endif

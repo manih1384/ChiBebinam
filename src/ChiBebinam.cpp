@@ -1,35 +1,23 @@
 #include "ChiBebinam.hpp"
-#include "AppException.hpp"
-#include "utils/Constants.hpp"
-
 #include <iostream>
+#include <string>
 
-ChiBebinam::ChiBebinam(int argc, char* argv[]) {
-    if (argc < REQUIRED_ARG_COUNT) {
-        throw InvalidArguments();
-    }
-
-    usersFilePath = argv[ARG_USERS_PATH_INDEX];
-    moviesFilePath = argv[ARG_MOVIES_PATH_INDEX];
-}
+ChiBebinam::ChiBebinam(Database& database) : db(database) {}
 
 void ChiBebinam::run() {
-    
-
-    // throw FileLoadError if fail
-
+    // You can log or prompt CLI here if needed
     handleCommand();
 }
 
 void ChiBebinam::handleCommand() {
     std::string input;
-    std::cout << PROMPT;
+    std::cout << "> ";
+
     while (std::getline(std::cin, input)) {
         if (input == "exit" || input == "quit") break;
 
-        // TODO: implement command parsing and dispatch here
-        std::cout << "[WARN] Command handling not implemented yet" << std::endl;
-
-        std::cout << PROMPT;
+        // TODO: actual command processing
+        std::cout << "[WARN] Command not implemented yet\n";
+        std::cout << "> ";
     }
 }
