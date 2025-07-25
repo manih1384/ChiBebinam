@@ -26,12 +26,6 @@ public:
     UserNotFound() : AppException("User not found") {}
 };
 
-class MovieNotFound : public AppException {
-public:
-    MovieNotFound() : AppException("Movie not found") {}
-};
-
-
 
 
 
@@ -52,4 +46,31 @@ class InvalidGenreString : public AppException {
 public:
     InvalidGenreString(const std::string& genre)
         : AppException("Invalid genre string: " + genre) {}
+};
+
+
+
+class InvalidRatingString : public AppException {
+public:
+    explicit InvalidRatingString(const std::string& input)
+        : AppException("Invalid rating string: " + input) {}
+};
+
+
+
+class RatingMismatchError : public AppException {
+public:
+    RatingMismatchError(const std::string& username)
+        : AppException("Ratings and movies count mismatch for user: " + username) {}
+};
+
+class MovieNotFound : public AppException {
+public:
+    MovieNotFound(const std::string& movieName)
+        : AppException("Movie not found: " + movieName) {}
+};
+
+class MalformedUserRow : public AppException {
+public:
+    MalformedUserRow() : AppException("Malformed user CSV row.") {}
 };

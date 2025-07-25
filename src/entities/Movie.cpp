@@ -26,7 +26,7 @@ Movie Movie::createMovie(const std::vector<std::string>& row) {
 
     Genre genre;
     try {
-        genre = genreFromString(row[3]);
+        genre = stringToGenre(row[3]);
     } catch (const InvalidGenreString& e) {
         throw; 
     }
@@ -45,7 +45,6 @@ Movie Movie::createMovie(const std::vector<std::string>& row) {
     return Movie(name, director, cast, genre, score);
 }
 
-// Getters
 const std::string& Movie::getName() const {
     return name;
 }
