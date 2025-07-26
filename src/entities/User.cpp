@@ -1,11 +1,11 @@
 #include "entities/User.hpp"
 #include "utils/CsvParser.hpp"
 #include "AppException.hpp"
-#include <algorithm>
 #include <iostream>
+#include <algorithm>
+
 User::User(std::string username, std::vector<WatchedEntry> watchedMovies)
     : username(std::move(username)), watchedMovies(std::move(watchedMovies)) {}
-
 
 const std::string& User::getUsername() const {
     return username;
@@ -15,29 +15,7 @@ const std::vector<User::WatchedEntry>& User::getWatchedMovies() const {
     return watchedMovies;
 }
 
-static std::shared_ptr<Movie> findMovieByName(const std::string& name, const std::vector<std::shared_ptr<Movie>>& pool) {
-    for (const auto& movie : pool) {
-        if (movie->getName() == name)
-            return movie;
-    }
-    throw MovieNotFound(name);
-}
-
-static std::vector<User::WatchedEntry> buildWatchedList(const std::vector<std::string>& movieNames,
-                                                        const std::vector<std::string>& ratingStrings,
-                                                        const std::vector<std::shared_ptr<Movie>>& pool) {
-
-    std::vector<User::WatchedEntry> watched;
-    for (int i = 0; i < movieNames.size(); ++i) {
-        auto movie = findMovieByName(movieNames[i], pool);
-        Rating rating = stringToRating(ratingStrings[i]);
-        watched.push_back({ movie, rating });
-    }
-
-    return watched;
-}
-
-User User::createUser(const std::vector<std::string>& row, const std::vector<std::shared_ptr<Movie>>& moviePool) {
+User User::createUser(const std::vector<std::string>& row, const std::unordered_map<std::string, std::shared_ptr<Movie>>& movieMap) {
     if (row.size() != 3) {
         throw MalformedUserRow();
     }
@@ -46,8 +24,21 @@ User User::createUser(const std::vector<std::string>& row, const std::vector<std
     auto movieNames = CsvParser::split(row[1], ';');
     auto ratingStrings = CsvParser::split(row[2], ';');
 
+    if (movieNames.size() != ratingStrings.size()) {
+        throw MalformedUserRow();
+    }
 
+    std::vector<WatchedEntry> watched;
+    for (size_t i = 0; i < movieNames.size(); ++i) {
+        const std::string& name = movieNames[i];
+        auto it = movieMap.find(name);
+        if (it == movieMap.end()) {
+            throw MovieNotFound(name);
+        }
 
-    auto watched = buildWatchedList(movieNames, ratingStrings, moviePool);
-    return User(username, watched);
+        Rating rating = stringToRating(ratingStrings[i]);
+        watched.push_back({ it->second, rating });
+    }
+
+    return User(std::move(username), std::move(watched));
 }

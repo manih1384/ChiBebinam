@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <memory>
+#include <unordered_map> 
 #include "entities/User.hpp"
 #include "entities/Movie.hpp"
 
@@ -11,15 +12,15 @@ class Database {
 public:
     Database(const std::string& usersPath, const std::string& moviesPath);
 
+    const std::unordered_map<std::string, std::shared_ptr<Movie>>& getMovieMap() const;
     const std::vector<User>& getUsers() const;
-    const std::vector<std::shared_ptr<Movie>>& getMovies() const;
 
 private:
-    std::vector<User> users;
-    std::vector<std::shared_ptr<Movie>> movies;
-
-    void loadUsers(const std::string& path);
     void loadMovies(const std::string& path);
+    void loadUsers(const std::string& path);
+
+    std::unordered_map<std::string, std::shared_ptr<Movie>> movieMap;
+    std::vector<User> users;
 };
 
-#endif
+#endif // DATABASE_HEADER

@@ -15,20 +15,21 @@ Database::Database(const std::string& usersPath, const std::string& moviesPath) 
 void Database::loadUsers(const std::string& path) {
     auto lines = CsvParser::parse(path);
     for (const auto& line : lines) {
-        users.push_back(User::createUser(line, movies));
+        users.push_back(User::createUser(line, movieMap));
     }
-
 }
+
 
 
 
 void Database::loadMovies(const std::string& path) {
     auto lines = CsvParser::parse(path);
     for (const auto& line : lines) {
-        movies.push_back(std::make_shared<Movie>(Movie::createMovie(line)));
+        auto movie = std::make_shared<Movie>(Movie::createMovie(line));
+        movieMap[movie->getName()] = movie;
     }
-    
 }
+
 
 // const std::vector<User>& Database::getUsers() const {
 //     return users;
