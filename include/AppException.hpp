@@ -52,7 +52,7 @@ public:
 
 class InvalidRatingString : public AppException {
 public:
-    explicit InvalidRatingString(const std::string& input)
+    InvalidRatingString(const std::string& input)
         : AppException("Invalid rating string: " + input) {}
 };
 
@@ -73,4 +73,18 @@ public:
 class MalformedUserRow : public AppException {
 public:
     MalformedUserRow() : AppException("Malformed user CSV row.") {}
+};
+
+
+
+class UnknownCommand : public AppException {
+public:
+    UnknownCommand(const std::string& cmd)
+        : AppException("Unknown command: " + cmd) {}
+};
+
+class InvalidCommandFormat : public AppException {
+public:
+    InvalidCommandFormat(const std::string& usage)
+        : AppException("Valid Command Format: " + usage) {}
 };
