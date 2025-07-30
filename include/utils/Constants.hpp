@@ -12,3 +12,4 @@ const std::string CAST_RECOMMENDATION_FORMAT = "cast_recommendation <?Username> 
 const std::string GENRE_RECOMMENDATION_FORMAT = "genre_recommendation <?Username> <Genre>";
 const std::string GENRE_RECOMMENDATION = "genre_recommendation";
 const std::string CAST_RECOMMENDATION = "cast_recommendation";
+const std::string NO_MOVIE_FOUND = "No suitable movies were found."; 

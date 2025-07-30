@@ -4,7 +4,8 @@
 #include <string>
 #include <vector>
 #include <memory>
-#include <unordered_map> 
+#include <unordered_map>
+
 #include "entities/User.hpp"
 #include "entities/Movie.hpp"
 
@@ -14,6 +15,10 @@ public:
 
     const std::unordered_map<std::string, std::shared_ptr<Movie>>& getMovieMap() const;
     const std::vector<User>& getUsers() const;
+
+    const std::shared_ptr<Movie>& getMovieByName(const std::string& name) const;
+    const User& getUserByName(const std::string& username) const;
+    std::vector<std::shared_ptr<Movie>> getAllMovies() const;
 
 private:
     void loadMovies(const std::string& path);

@@ -15,7 +15,6 @@ public:
 
     static Movie createMovie(const std::vector<std::string>& row);
 
-    // Getters
     const std::string& getName() const;
     const std::string& getDirector() const;
     const std::string& getCast() const;

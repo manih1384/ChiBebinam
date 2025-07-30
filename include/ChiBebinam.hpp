@@ -13,12 +13,14 @@ public:
 
 private:
     Database& db;
-    // GenreRecommender genreRec;
+    GenreRecommender genreRec;
     // CastRecommender castRec;
 
     void processCommand(const std::string& input);
     void handleGenreRecommendation(const std::vector<std::string>& tokens);
     void handleCastRecommendation(const std::vector<std::string>& tokens);
+    void handleOutput(const std::vector<std::shared_ptr<Movie>>& movies, int count);
+
 };
 
 

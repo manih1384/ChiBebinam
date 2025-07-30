@@ -21,14 +21,6 @@ public:
         : AppException("Failed to load file: " + filename) {}
 };
 
-class UserNotFound : public AppException {
-public:
-    UserNotFound() : AppException("User not found") {}
-};
-
-
-
-
 
 class CsvRowSizeMismatch : public AppException {
 public:
@@ -64,11 +56,21 @@ public:
         : AppException("Ratings and movies count mismatch for user: " + username) {}
 };
 
+class UserNotFound : public AppException {
+public:
+    UserNotFound(const std::string& username)
+        : AppException("User not found: " + username) {}
+};
+
+
+
 class MovieNotFound : public AppException {
 public:
     MovieNotFound(const std::string& movieName)
         : AppException("Movie not found: " + movieName) {}
 };
+
+
 
 class MalformedUserRow : public AppException {
 public:

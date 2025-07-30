@@ -4,14 +4,14 @@
 #include <iostream>
 #include <algorithm>
 
-User::User(std::string username, std::vector<WatchedEntry> watchedMovies)
+User::User(std::string username, std::vector<WatchedMovie> watchedMovies)
     : username(std::move(username)), watchedMovies(std::move(watchedMovies)) {}
 
 const std::string& User::getUsername() const {
     return username;
 }
 
-const std::vector<User::WatchedEntry>& User::getWatchedMovies() const {
+const std::vector<User::WatchedMovie>& User::getWatchedMovies() const {
     return watchedMovies;
 }
 
@@ -28,7 +28,7 @@ User User::createUser(const std::vector<std::string>& row, const std::unordered_
         throw MalformedUserRow();
     }
 
-    std::vector<WatchedEntry> watched;
+    std::vector<WatchedMovie> watched;
     for (size_t i = 0; i < movieNames.size(); ++i) {
         const std::string& name = movieNames[i];
         auto it = movieMap.find(name);
@@ -41,4 +41,17 @@ User User::createUser(const std::vector<std::string>& row, const std::unordered_
     }
 
     return User(std::move(username), std::move(watched));
+}
+
+
+
+
+
+bool User::hasWatched(const std::shared_ptr<Movie>& movie) const {
+    for (const WatchedMovie& watched : watchedMovies) {
+        if (watched.movie == movie) {
+            return true;
+        }
+    }
+    return false;
 }

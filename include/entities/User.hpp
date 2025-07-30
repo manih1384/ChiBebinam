@@ -9,7 +9,7 @@
 #include <unordered_map>
 class User {
 public:
-    struct WatchedEntry {
+    struct WatchedMovie {
         std::shared_ptr<Movie> movie;
         Rating rating;
     };
@@ -17,13 +17,14 @@ public:
     static User createUser(const std::vector<std::string>& row, const std::unordered_map<std::string, std::shared_ptr<Movie>>& movieMap);
 
     const std::string& getUsername() const;
-    const std::vector<WatchedEntry>& getWatchedMovies() const;
+    const std::vector<WatchedMovie>& getWatchedMovies() const;
+    bool hasWatched(const std::shared_ptr<Movie>& movie) const ;
 
 private:
     std::string username;
-    std::vector<WatchedEntry> watchedMovies;
+    std::vector<WatchedMovie> watchedMovies;
     
-    User(std::string username, std::vector<WatchedEntry> watchedMovies);
+    User(std::string username, std::vector<WatchedMovie> watchedMovies);
 };
 
 #endif // USER_HPP
