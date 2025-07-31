@@ -13,8 +13,8 @@ public:
 
 private:
     Database& db;
-    GenreRecommender genreRec;
-    // CastRecommender castRec;
+    GenreRecommender genreRecomm;
+    CastRecommender castRecomm;
 
     void processCommand(const std::string& input);
     void handleGenreRecommendation(const std::vector<std::string>& tokens);

@@ -15,7 +15,8 @@ enum class Genre {
 enum class Rating {
     Perfect,
     Average,
-    Poor
+    Poor,
+    Unknown
 };
 
 Genre stringToGenre(const std::string& genreStr);

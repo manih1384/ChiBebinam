@@ -55,3 +55,15 @@ bool User::hasWatched(const std::shared_ptr<Movie>& movie) const {
     }
     return false;
 }
+
+
+
+Rating User::getRatingFor(const std::shared_ptr<Movie>& movie) const {
+    for (const WatchedMovie& watched : watchedMovies) {
+        if (watched.movie == movie) {
+            return watched.rating;
+        }
+    }
+    return Rating::Unknown;
+}
+

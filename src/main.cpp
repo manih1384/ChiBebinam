@@ -25,3 +25,6 @@ int main(int argc, char* argv[]) {
     }
     return 0;
 }
+
+
+//  assumption: input can be both in genre_recommandation "<Username>" "<Genre>"  or genre_recommandation <Username> <Genre>   ( meaning it can or cannot have the quotes)

@@ -1,5 +1,6 @@
 #include "ChiBebinam.hpp"
 #include "utils/CsvParser.hpp"
+#include "utils/Utils.hpp"
 #include "utils/Constants.hpp"
 #include "AppException.hpp"
 #include <iostream>
@@ -16,7 +17,7 @@ void ChiBebinam::run() {
 
     while (std::getline(std::cin, input)) {
         try {
-            if (input == "exit" || input == "quit") break;
+            if (input == QUIT) break;
             processCommand(input);
         } catch (const AppException& ex) {
             std::cerr << ERROR_PREFIX << ex.getMessage() << std::endl;
@@ -47,22 +48,22 @@ void ChiBebinam::processCommand(const std::string& input) {
 
 void ChiBebinam::handleGenreRecommendation(const std::vector<std::string>& tokens) {
     if (tokens.size() == 3) {
-        std::string username = tokens[1];
-        std::string genre = tokens[2];
+        std::string username = stripDoubleQuotes(tokens[1]);
+        std::string genre = stripDoubleQuotes(tokens[2]);
 
         const User& user = db.getUserByName(username);
         const std::vector<std::shared_ptr<Movie>>& movies = db.getAllMovies();
 
-        std::vector<std::shared_ptr<Movie>> results = genreRec.recommend(user, movies, genre);
+        std::vector<std::shared_ptr<Movie>> results = genreRecomm.recommend(user, movies, genre);
 
         handleOutput(results, 3);
     }
 
     else if (tokens.size() == 2) {
-        std::string genre = tokens[1];
+        std::string genre = stripDoubleQuotes(tokens[1]);
         const std::vector<std::shared_ptr<Movie>>& movies = db.getAllMovies();
-
-        std::vector<std::shared_ptr<Movie>> results = genreRec.recommend(movies, genre);
+        const auto& users = db.getUsers();
+        std::vector<std::shared_ptr<Movie>> results = genreRecomm.recommend(users,movies,genre);
         handleOutput(results, 3);
     }
     
@@ -75,9 +76,9 @@ void ChiBebinam::handleGenreRecommendation(const std::vector<std::string>& token
 
 void ChiBebinam::handleCastRecommendation(const std::vector<std::string>& tokens) {
     if (tokens.size() == 3) {
-        // castRec.recommend(tokens[1], tokens[2]);
+        // castRecomm.recommend(tokens[1], tokens[2]);
     } else if (tokens.size() == 2) {
-        // castRec.recommend("", tokens[1]);
+        // castRecomm.recommend("", tokens[1]);
     } else {
         throw InvalidCommandFormat(CAST_RECOMMENDATION_FORMAT);
     }

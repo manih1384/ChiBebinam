@@ -17,6 +17,7 @@ public:
         const std::string& filter) = 0;
 
     virtual std::vector<std::shared_ptr<Movie>> recommend(
+        const std::vector<User>& Users,
         const std::vector<std::shared_ptr<Movie>>& movies,
         const std::string& filter) = 0;
 };

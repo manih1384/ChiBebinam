@@ -7,6 +7,7 @@
 #include "entities/Movie.hpp"
 #include "utils/enums.hpp"
 #include <unordered_map>
+
 class User {
 public:
     struct WatchedMovie {
@@ -19,11 +20,12 @@ public:
     const std::string& getUsername() const;
     const std::vector<WatchedMovie>& getWatchedMovies() const;
     bool hasWatched(const std::shared_ptr<Movie>& movie) const ;
+    Rating getRatingFor(const std::shared_ptr<Movie>& movie) const;
 
 private:
     std::string username;
     std::vector<WatchedMovie> watchedMovies;
-    
+
     User(std::string username, std::vector<WatchedMovie> watchedMovies);
 };
 

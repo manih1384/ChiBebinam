@@ -97,29 +97,52 @@ float GenreRecommender::calculateCastEffect(
 }
 
 
-
-
 std::vector<std::shared_ptr<Movie>> GenreRecommender::recommend(
+    const std::vector<User>& Users,
     const std::vector<std::shared_ptr<Movie>>& movies,
     const std::string& genreStr
 ) {
     Genre genreEnum = stringToGenre(genreStr);
     std::vector<ScoredMovie> scoredMovies;
 
-    for (const std::shared_ptr<Movie>& movie : movies) {
-        if (movie->getGenre() != genreEnum)
-            continue;
+    for (const auto& movie : movies) {
+        if (movie->getGenre() != genreEnum) continue;
 
-        float score = static_cast<float>(movie->getImdbScore());
+        float score = calculateNoUserScore(movie, Users);
         scoredMovies.push_back({movie, score});
     }
 
     std::sort(scoredMovies.begin(), scoredMovies.end());
 
     std::vector<std::shared_ptr<Movie>> results;
-    for (const ScoredMovie& entry : scoredMovies) {
-        results.push_back(entry.movie);
+    for (int i = 0; i < 3 && i < scoredMovies.size(); ++i) {
+        results.push_back(scoredMovies[i].movie);
     }
 
     return results;
 }
+
+
+float GenreRecommender::calculateNoUserScore(
+    const std::shared_ptr<Movie>& movie,
+    const std::vector<User>& users
+) {
+    int perfectCount = 0;
+    int averageCount = 0;
+    int poorCount = 0;
+
+    for (const User& user : users) {
+        Rating rating = user.getRatingFor(movie);
+
+        if (rating == Rating::Perfect) {
+            perfectCount++;
+        } else if (rating == Rating::Average) {
+            averageCount++;
+        } else if (rating == Rating::Poor) {
+            poorCount++;
+        }
+    }
+
+    return (0.7f * perfectCount) + (0.5f * averageCount) + (-0.2f * poorCount);
+}
+
