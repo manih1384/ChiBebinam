@@ -29,7 +29,7 @@ void ChiBebinam::run() {
 }
 
 void ChiBebinam::processCommand(const std::string& input) {
-    auto tokens = CsvParser::split(input, ' ');
+    auto tokens = CsvParser::splitOnQuotes(input);
 
     if (tokens.empty()) {
         throw InvalidArguments();
@@ -48,8 +48,8 @@ void ChiBebinam::processCommand(const std::string& input) {
 
 void ChiBebinam::handleGenreRecommendation(const std::vector<std::string>& tokens) {
     if (tokens.size() == 3) {
-        std::string username = stripDoubleQuotes(tokens[1]);
-        std::string genre = stripDoubleQuotes(tokens[2]);
+        std::string username = tokens[1];
+        std::string genre = tokens[2];
 
         const User& user = db.getUserByName(username);
         const std::vector<std::shared_ptr<Movie>>& movies = db.getAllMovies();
@@ -60,7 +60,7 @@ void ChiBebinam::handleGenreRecommendation(const std::vector<std::string>& token
     }
 
     else if (tokens.size() == 2) {
-        std::string genre = stripDoubleQuotes(tokens[1]);
+        std::string genre = tokens[1];
         const std::vector<std::shared_ptr<Movie>>& movies = db.getAllMovies();
         const auto& users = db.getUsers();
         std::vector<std::shared_ptr<Movie>> results = genreRecomm.recommend(users,movies,genre);
@@ -76,9 +76,21 @@ void ChiBebinam::handleGenreRecommendation(const std::vector<std::string>& token
 
 void ChiBebinam::handleCastRecommendation(const std::vector<std::string>& tokens) {
     if (tokens.size() == 3) {
-        // castRecomm.recommend(tokens[1], tokens[2]);
+        std::string username = tokens[1];
+        std::string cast = tokens[2];
+
+        const User& user = db.getUserByName(username);
+
+        const std::vector<std::shared_ptr<Movie>>& movies = db.getAllMovies();
+
+        std::vector<std::shared_ptr<Movie>> results = castRecomm.recommend(user, movies, cast);
+        handleOutput(results, 2);
     } else if (tokens.size() == 2) {
-        // castRecomm.recommend("", tokens[1]);
+        std::string cast = tokens[1];
+        const std::vector<std::shared_ptr<Movie>>& movies = db.getAllMovies();
+        const auto& users = db.getUsers();
+        std::vector<std::shared_ptr<Movie>> results = castRecomm.recommend(users,movies, cast);
+        handleOutput(results, 2);
     } else {
         throw InvalidCommandFormat(CAST_RECOMMENDATION_FORMAT);
     }

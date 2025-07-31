@@ -3,7 +3,9 @@
 #include "AppException.hpp"
 #include <iostream>
 #include <algorithm>
-
+#include <unordered_map>
+#include <limits>
+#include "utils/Utils.hpp"
 User::User(std::string username, std::vector<WatchedMovie> watchedMovies)
     : username(std::move(username)), watchedMovies(std::move(watchedMovies)) {}
 
@@ -67,3 +69,13 @@ Rating User::getRatingFor(const std::shared_ptr<Movie>& movie) const {
     return Rating::Unknown;
 }
 
+Genre User::getFavoriteGenre() const {
+    std::unordered_map<Genre, int> genreCounts;
+
+
+    for (const WatchedMovie& watched : watchedMovies) {
+        genreCounts[watched.movie->getGenre()]++;
+    }
+
+    return getKeyWithMaxValue(genreCounts);
+}

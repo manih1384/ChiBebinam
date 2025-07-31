@@ -2,6 +2,7 @@
 #include "AppException.hpp"
 #include <fstream>
 #include <sstream>
+#include <regex>
 
 std::vector<std::vector<std::string>> CsvParser::parse(const std::string& filepath, char delimiter) {
     std::ifstream file(filepath);
@@ -37,5 +38,23 @@ std::vector<std::string> CsvParser::split(const std::string& input, char delimit
         tokens.push_back(token);
     }
 
+    return tokens;
+}
+
+std::vector<std::string> CsvParser::splitOnQuotes(const std::string& input) {
+    std::vector<std::string> tokens;
+    std::regex pattern(R"'("([^"]*)"|(\S+))'");
+
+    std::smatch match;
+
+    std::string s = input;
+    while (std::regex_search(s, match, pattern)) {
+        if (match[1].matched) {
+            tokens.push_back(match[1].str()); 
+        } else {
+            tokens.push_back(match[2].str()); 
+        }
+        s = match.suffix();
+    }
     return tokens;
 }

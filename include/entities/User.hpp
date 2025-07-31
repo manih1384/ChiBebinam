@@ -21,6 +21,7 @@ public:
     const std::vector<WatchedMovie>& getWatchedMovies() const;
     bool hasWatched(const std::shared_ptr<Movie>& movie) const ;
     Rating getRatingFor(const std::shared_ptr<Movie>& movie) const;
+    Genre getFavoriteGenre() const;
 
 private:
     std::string username;
