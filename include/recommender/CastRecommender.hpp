@@ -17,12 +17,6 @@ public:
         const std::vector<User>& users,
         const std::vector<std::shared_ptr<Movie>>& movies,
         const std::string& cast) override;
-
-private:
-
-    std::vector<std::shared_ptr<Movie>> filterMoviesByCast(
-        const std::vector<std::shared_ptr<Movie>>& movies,
-        const std::string& cast) const;
 };
 
 #endif

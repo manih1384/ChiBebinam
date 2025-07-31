@@ -2,7 +2,7 @@
 #include <string>
 const std::string QUIT ="quit";
 const std::string ERROR_USAGE_MSG = "Usage: ./ChiBebinam <users.csv> <movies.csv>";
-const std::string PROMPT = "> ";
+const std::string PROMPT = "$ ";
 const std::string ERROR_PREFIX = "Error: ";
 const std::string UNKOWN_ERROR_PREFIX = "Unknown Error: ";
 const int REQUIRED_ARG_COUNT = 3;

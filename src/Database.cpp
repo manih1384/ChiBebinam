@@ -57,3 +57,17 @@ std::vector<std::shared_ptr<Movie>> Database::getAllMovies() const {
     }
     return result;
 }
+
+
+std::vector<std::shared_ptr<Movie>> Database::getMoviesByCast(const std::string& castMember) const {
+    std::vector<std::shared_ptr<Movie>> result;
+
+    for (const auto& pair : movieMap) {
+        const auto& movie = pair.second;
+        if (movie->getCast() == castMember) {
+            result.push_back(movie);
+        }
+    }
+
+    return result;
+}

@@ -35,31 +35,17 @@ vector<shared_ptr<Movie>> CastRecommender::recommend(
 }
 
 vector<shared_ptr<Movie>> CastRecommender::recommend(
-    const vector<User>& /* unused */,
+    const vector<User>& ,
     const vector<shared_ptr<Movie>>& movies,
     const string& cast) {
 
-    // // Filter movies by cast
-    // vector<shared_ptr<Movie>> candidates = filterMoviesByCast(movies, cast);
-    
-    // // Sort and return top 2
-    // sortMoviesByImdbAndName(candidates);
-    // return candidates.size() > 2 ? 
-    //     vector<shared_ptr<Movie>>{candidates[0], candidates[1]} : 
-    //     candidates;
+
+
+    std::vector<std::shared_ptr<Movie>> results = movies;
+
+    std::sort(results.begin(), results.end(),compareMovies);
+
+    return results;
 }
 
-
-vector<shared_ptr<Movie>> CastRecommender::filterMoviesByCast(
-    const vector<shared_ptr<Movie>>& movies,
-    const string& cast) const {
-
-    vector<shared_ptr<Movie>> result;
-    for (const auto& movie : movies) {
-        if (movie->getCast() == cast) {
-            result.push_back(movie);
-        }
-    }
-    return result;
-}
 

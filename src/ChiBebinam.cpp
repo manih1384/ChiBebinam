@@ -87,8 +87,9 @@ void ChiBebinam::handleCastRecommendation(const std::vector<std::string>& tokens
         handleOutput(results, 2);
     } else if (tokens.size() == 2) {
         std::string cast = tokens[1];
-        const std::vector<std::shared_ptr<Movie>>& movies = db.getAllMovies();
+        const std::vector<std::shared_ptr<Movie>>& movies = db.getMoviesByCast(cast);
         const auto& users = db.getUsers();
+
         std::vector<std::shared_ptr<Movie>> results = castRecomm.recommend(users,movies, cast);
         handleOutput(results, 2);
     } else {

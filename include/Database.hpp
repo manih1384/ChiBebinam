@@ -19,6 +19,7 @@ public:
     const std::shared_ptr<Movie>& getMovieByName(const std::string& name) const;
     const User& getUserByName(const std::string& username) const;
     std::vector<std::shared_ptr<Movie>> getAllMovies() const;
+    std::vector<std::shared_ptr<Movie>> getMoviesByCast(const std::string& castMember) const;
 
 private:
     void loadMovies(const std::string& path);
