@@ -1,5 +1,4 @@
 #include "ChiBebinam.hpp"
-#include "utils/CsvParser.hpp"
 #include "utils/Utils.hpp"
 #include "utils/Constants.hpp"
 #include "AppException.hpp"
@@ -100,7 +99,7 @@ void ChiBebinam::handleCastRecommendation(const std::vector<std::string>& tokens
 
 void ChiBebinam::handleOutput(const std::vector<std::shared_ptr<Movie>>& movies, int count) {
     if (movies.empty()) {
-        std::cout << NO_MOVIE_FOUND << std::endl;
+        std::cout << ErrorMessage::NO_MOVIE_FOUND << std::endl;
         return;
     }
 

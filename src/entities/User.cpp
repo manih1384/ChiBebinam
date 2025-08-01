@@ -1,5 +1,4 @@
 #include "entities/User.hpp"
-#include "utils/CsvParser.hpp"
 #include "AppException.hpp"
 #include <iostream>
 #include <algorithm>

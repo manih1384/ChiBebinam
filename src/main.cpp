@@ -4,11 +4,9 @@
 #include "AppException.hpp"
 #include "utils/Constants.hpp"
 
-
-
 int main(int argc, char* argv[]) {
     if (argc < REQUIRED_ARG_COUNT) {
-        std::cerr << "Missing path to CSV file.Usage: ./ChiBebinam <users.csv> <movies.csv>" << std::endl;
+        std::cerr << ERROR_PREFIX << ERROR_USAGE_MSG << std::endl;
         return 1;
     }
 
@@ -20,11 +18,11 @@ int main(int argc, char* argv[]) {
         std::cerr << ERROR_PREFIX << e.getMessage() << std::endl;
         return 1;
     } catch (const std::exception& e) {
-        std::cerr <<UNKOWN_ERROR_PREFIX<< e.what() << std::endl;
+        std::cerr << UNKOWN_ERROR_PREFIX << e.what() << std::endl;
         return 2;
     }
+
     return 0;
 }
-
 
 //  assumption: input can be both in genre_recommandation "<Username>" "<Genre>"  or genre_recommandation <Username> <Genre>   ( meaning it can or cannot have the quotes)

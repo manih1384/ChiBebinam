@@ -1,5 +1,7 @@
-#pragma once
+#ifndef ERROR_HPP
+#define ERROR_HPP
 #include <string>
+#include "utils/Constants.hpp"
 
 class AppException {
 private:
@@ -9,84 +11,76 @@ public:
     const std::string& getMessage() const { return message; }
 };
 
-
 class InvalidArguments : public AppException {
 public:
-    InvalidArguments() : AppException("Invalid command line arguments") {}
+    InvalidArguments()
+        : AppException(ErrorMessage::INVALID_ARGS) {}
 };
 
 class FileLoadError : public AppException {
 public:
     explicit FileLoadError(const std::string& filename)
-        : AppException("Failed to load file: " + filename) {}
+        : AppException(ErrorMessage::FILE_LOAD + filename) {}
 };
-
 
 class CsvRowSizeMismatch : public AppException {
 public:
     CsvRowSizeMismatch()
-        : AppException("CSV row size mismatch: expected 5 fields for Movie") {}
+        : AppException(ErrorMessage::MOVIE_CSV_MISMATCH) {}
 };
 
 class InvalidImdbScore : public AppException {
 public:
     InvalidImdbScore()
-        : AppException("Invalid IMDb score: must be an integer between 0 and 10") {}
+        : AppException(ErrorMessage::INVALID_IMDB) {}
 };
 
 class InvalidGenreString : public AppException {
 public:
     InvalidGenreString(const std::string& genre)
-        : AppException("Invalid genre string: " + genre) {}
+        : AppException(ErrorMessage::INVALID_GENRE + genre) {}
 };
-
-
 
 class InvalidRatingString : public AppException {
 public:
     InvalidRatingString(const std::string& input)
-        : AppException("Invalid rating string: " + input) {}
+        : AppException(ErrorMessage::INVALID_RATING + input) {}
 };
-
-
 
 class RatingMismatchError : public AppException {
 public:
     RatingMismatchError(const std::string& username)
-        : AppException("Ratings and movies count mismatch for user: " + username) {}
+        : AppException(ErrorMessage::RATING_MISMATCH + username) {}
 };
 
 class UserNotFound : public AppException {
 public:
     UserNotFound(const std::string& username)
-        : AppException("User not found: " + username) {}
+        : AppException(ErrorMessage::USER_NOT_FOUND + username) {}
 };
-
-
 
 class MovieNotFound : public AppException {
 public:
     MovieNotFound(const std::string& movieName)
-        : AppException("Movie not found: " + movieName) {}
+        : AppException(ErrorMessage::MOVIE_NOT_FOUND + movieName) {}
 };
-
-
 
 class MalformedUserRow : public AppException {
 public:
-    MalformedUserRow() : AppException("Malformed user CSV row.") {}
+    MalformedUserRow()
+        : AppException(ErrorMessage::MALFORMED_USER) {}
 };
-
-
 
 class UnknownCommand : public AppException {
 public:
     UnknownCommand(const std::string& cmd)
-        : AppException("Unknown command: " + cmd) {}
+        : AppException(ErrorMessage::UNKNOWN_COMMAND + cmd) {}
 };
 
 class InvalidCommandFormat : public AppException {
 public:
     InvalidCommandFormat(const std::string& usage)
-        : AppException("Valid Command Format: " + usage) {}
+        : AppException(ErrorMessage::INVALID_COMMAND_FORMAT + usage) {}
 };
+
+#endif

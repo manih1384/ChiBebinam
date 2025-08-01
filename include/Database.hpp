@@ -5,10 +5,9 @@
 #include <vector>
 #include <memory>
 #include <unordered_map>
-
 #include "entities/User.hpp"
 #include "entities/Movie.hpp"
-
+#include "utils/Utils.hpp"
 class Database {
 public:
     Database(const std::string& usersPath, const std::string& moviesPath);
