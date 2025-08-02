@@ -37,4 +37,5 @@ namespace ErrorMessage {
     const std::string UNKNOWN_COMMAND = "Unknown command: ";
     const std::string INVALID_COMMAND_FORMAT = "Valid Command Format: ";
     const std::string NO_MOVIE_FOUND = "No suitable movies were found.";
+    const std::string EMPTY_MAP="Cannot get max key from an empty map";
 }

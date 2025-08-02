@@ -28,7 +28,7 @@ void ChiBebinam::run() {
 }
 
 void ChiBebinam::processCommand(const std::string& input) {
-    auto tokens = CsvParser::splitOnQuotes(input);
+    std::vector<std::string> tokens = CsvParser::splitOnQuotes(input);
 
     if (tokens.empty()) {
         throw InvalidArguments();
@@ -61,7 +61,7 @@ void ChiBebinam::handleGenreRecommendation(const std::vector<std::string>& token
     else if (tokens.size() == 2) {
         std::string genre = tokens[1];
         const std::vector<std::shared_ptr<Movie>>& movies = db.getAllMovies();
-        const auto& users = db.getUsers();
+        const std::vector<User>& users = db.getUsers();
         std::vector<std::shared_ptr<Movie>> results = genreRecomm.recommend(users,movies,genre);
         handleOutput(results, 3);
     }
@@ -87,7 +87,7 @@ void ChiBebinam::handleCastRecommendation(const std::vector<std::string>& tokens
     } else if (tokens.size() == 2) {
         std::string cast = tokens[1];
         const std::vector<std::shared_ptr<Movie>>& movies = db.getMoviesByCast(cast);
-        const auto& users = db.getUsers();
+        const std::vector<User>& users = db.getUsers();
 
         std::vector<std::shared_ptr<Movie>> results = castRecomm.recommend(users,movies, cast);
         handleOutput(results, 2);

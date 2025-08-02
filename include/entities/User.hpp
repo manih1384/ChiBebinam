@@ -5,7 +5,7 @@
 #include <vector>
 #include <memory>
 #include "entities/Movie.hpp"
-#include "utils/enums.hpp"
+#include "enums/Rating.hpp"
 #include <unordered_map>
 
 class User {

@@ -13,6 +13,7 @@ public:
     static std::vector<std::vector<std::string>> parse(const std::string& filepath, char delimiter = ',');
     static std::vector<std::string> split(const std::string& input, char delimiter);
     static std::vector<std::string> splitOnQuotes(const std::string& input);
+    static std::string trim(const std::string& str);
 };
 
 
@@ -20,7 +21,7 @@ template<typename K, typename V>
 K getKeyWithMaxValue(const std::unordered_map<K, V>& map) {
     
     if (map.empty()) {
-        throw std::runtime_error("Cannot get max key from an empty map");
+        throw std::runtime_error(ErrorMessage::EMPTY_MAP);
     }
 
     auto maxIt = map.begin();
@@ -33,3 +34,5 @@ K getKeyWithMaxValue(const std::unordered_map<K, V>& map) {
 }
 
 #endif
+
+

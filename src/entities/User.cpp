@@ -22,8 +22,8 @@ User User::createUser(const std::vector<std::string>& row, const std::unordered_
     }
 
     std::string username = row[0];
-    auto movieNames = CsvParser::split(row[1], ';');
-    auto ratingStrings = CsvParser::split(row[2], ';');
+    std::vector<std::string> movieNames = CsvParser::split(row[1], ';');
+    std::vector<std::string> ratingStrings = CsvParser::split(row[2], ';');
 
     if (movieNames.size() != ratingStrings.size()) {
         throw MalformedUserRow();

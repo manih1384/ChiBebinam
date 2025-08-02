@@ -10,16 +10,16 @@ Database::Database(const std::string& usersPath, const std::string& moviesPath) 
 }
 
 void Database::loadMovies(const std::string& path) {
-    auto lines = CsvParser::parse(path);
-    for (const auto& line : lines) {
-        auto movie = std::make_shared<Movie>(Movie::createMovie(line));
+    std::vector<std::vector<std::string>> lines = CsvParser::parse(path);
+    for (const std::vector<std::string>& line : lines) {
+        std::shared_ptr<Movie> movie = std::make_shared<Movie>(Movie::createMovie(line));
         movieMap[movie->getName()] = movie;
     }
 }
 
 void Database::loadUsers(const std::string& path) {
-    auto lines = CsvParser::parse(path);
-    for (const auto& line : lines) {
+    std::vector<std::vector<std::string>> lines = CsvParser::parse(path);
+    for (const std::vector<std::string>& line : lines) {
         users.push_back(User::createUser(line, movieMap));
     }
 }
@@ -41,7 +41,7 @@ const std::shared_ptr<Movie>& Database::getMovieByName(const std::string& name) 
 }
 
 const User& Database::getUserByName(const std::string& username) const {
-    for (const auto& user : users) {
+    for (const User& user : users) {
         if (user.getUsername() == username)
             return user;
     }
@@ -61,7 +61,7 @@ std::vector<std::shared_ptr<Movie>> Database::getMoviesByCast(const std::string&
     std::vector<std::shared_ptr<Movie>> result;
 
     for (const auto& pair : movieMap) {
-        const auto& movie = pair.second;
+        const std::shared_ptr<Movie>& movie = pair.second;
         if (movie->getCast() == castMember) {
             result.push_back(movie);
         }

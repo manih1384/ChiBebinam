@@ -58,3 +58,10 @@ std::vector<std::string> CsvParser::splitOnQuotes(const std::string& input) {
     }
     return tokens;
 }
+
+
+
+std::string CsvParser::trim(const std::string& str) {
+    static const std::regex wsRegex("^\\s+|\\s+$");
+    return std::regex_replace(str, wsRegex, "");
+}

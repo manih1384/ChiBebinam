@@ -8,48 +8,38 @@ std::vector<std::shared_ptr<Movie>> GenreRecommender::recommend(
     const std::vector<std::shared_ptr<Movie>>& movies,
     const std::string& genreStr
 ) {
-
-
-
     Genre genreEnum = stringToGenre(genreStr);
     std::vector<ScoredMovie> scoredMovies;
 
-    for (const auto& movie : movies) {
-
+    for (const std::shared_ptr<Movie>& movie : movies) {
         if (movie->getGenre() != genreEnum || user.hasWatched(movie)) continue;
 
         float score = calculateScore(user, movie);
-
         scoredMovies.push_back({movie, score});
-
     }
 
     std::sort(scoredMovies.begin(), scoredMovies.end());
 
     std::vector<std::shared_ptr<Movie>> results;
-    for (const auto& entry : scoredMovies) {
+    for (const ScoredMovie& entry : scoredMovies) {
         results.push_back(entry.movie);
     }
 
     return results;
 }
 
-
 float GenreRecommender::calculateScore(
     const User& user,
     const std::shared_ptr<Movie>& movie
 ) {
-
-
     float score = 0;
 
-    score += 0.5*calculateDirectorEffect(user, movie);
-    score += 0.6*calculateCastEffect(user, movie);
-    score += 0.7*static_cast<float>(movie->getImdbScore());
+    score += 0.5f * calculateDirectorEffect(user, movie);
+    score += 0.6f * calculateCastEffect(user, movie);
+    score += 0.7f * static_cast<float>(movie->getImdbScore());
 
     return score;
 }
-
 
 float GenreRecommender::calculateDirectorEffect(
     const User& user,
@@ -71,7 +61,6 @@ float GenreRecommender::calculateDirectorEffect(
 
     return 0;
 }
-
 
 float GenreRecommender::calculateCastEffect(
     const User& user,
@@ -96,32 +85,30 @@ float GenreRecommender::calculateCastEffect(
     return 0;
 }
 
-
 std::vector<std::shared_ptr<Movie>> GenreRecommender::recommend(
-    const std::vector<User>& Users,
+    const std::vector<User>& users,
     const std::vector<std::shared_ptr<Movie>>& movies,
     const std::string& genreStr
 ) {
     Genre genreEnum = stringToGenre(genreStr);
     std::vector<ScoredMovie> scoredMovies;
 
-    for (const auto& movie : movies) {
+    for (const std::shared_ptr<Movie>& movie : movies) {
         if (movie->getGenre() != genreEnum) continue;
 
-        float score = calculateNoUserScore(movie, Users);
+        float score = calculateNoUserScore(movie, users);
         scoredMovies.push_back({movie, score});
     }
 
     std::sort(scoredMovies.begin(), scoredMovies.end());
 
     std::vector<std::shared_ptr<Movie>> results;
-    for (int i = 0; i < 3 && i < scoredMovies.size(); ++i) {
+    for (int i = 0; i < 3 && i < static_cast<int>(scoredMovies.size()); ++i) {
         results.push_back(scoredMovies[i].movie);
     }
 
     return results;
 }
-
 
 float GenreRecommender::calculateNoUserScore(
     const std::shared_ptr<Movie>& movie,
@@ -145,4 +132,3 @@ float GenreRecommender::calculateNoUserScore(
 
     return (0.7f * perfectCount) + (0.5f * averageCount) + (-0.2f * poorCount);
 }
-

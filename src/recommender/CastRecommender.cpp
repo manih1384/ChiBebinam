@@ -23,7 +23,7 @@ vector<shared_ptr<Movie>> CastRecommender::recommend(
 
     vector<shared_ptr<Movie>> results;
 
-    for (const auto& movie : movies) {
+    for (const shared_ptr<Movie>& movie : movies) {
         if (movie->getCast() == cast &&  movie->getGenre() == favoriteGenre && !user.hasWatched(movie)) {
             results.push_back(movie);
         }

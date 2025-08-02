@@ -3,7 +3,7 @@
 
 #include <string>
 #include <vector>
-#include "utils/enums.hpp"
+#include "enums/Genre.hpp"
 
 class Movie {
 public:
@@ -29,4 +29,4 @@ private:
     int imdbScore;
 };
 
-#endif // MOVIE_HPP
+#endif
